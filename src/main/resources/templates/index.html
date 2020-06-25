@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.css"/>
+    <script src="/bootstrap/js/jquery-1.12.4.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/bootstrap/js/bootstrap.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+
+
+<!--这里是select和delete的操作-->
+<!--
+    UPDATE
+        user
+    SET
+        deleted=1
+    WHERE
+        deleted=0
+        AND id >= 1
+        AND id <= 44
+        AND name LIKE '%%'
+        AND age >= 10
+        AND age <= 39
+        AND email LIKE '%%'
+-->
+<!--
+    SELECT
+        id,
+        name,
+        age,
+        email,
+        create_time,
+        update_time,
+        version,
+        deleted
+    FROM
+        user
+    WHERE
+        deleted=0
+-->
+
+<hr>
+<h2>多条件查询</h2>
+<h5>示例：</h5>
+<br>
+<form class="form-inline" action="/user/selectUser" method="post">
+    <div class="form-group">
+        <label>idGe</label>
+        <input type="text" class="form-control" value="" name="idGe"
+               placeholder="id >= idGe">
+    </div>
+    <div class="form-group">
+        <label>idLe</label>
+        <input type="text" class="form-control"  value="" name="idLe"
+               placeholder="id <= idLe">
+    </div>
+    <div class="form-group">
+        <label>Name</label>
+        <input type="text" class="form-control"  value="" name="name"
+               placeholder="name like %..%">
+    </div>
+    <div class="form-group">
+        <label>ageGe</label>
+        <input type="text" class="form-control" value="" name="ageGe"
+               placeholder="age >= ageGe">
+    </div>
+    <div class="form-group">
+        <label>ageLe</label>
+        <input type="text" class="form-control" value="" name="ageLe"
+               placeholder="age <= ageLe">
+    </div>
+    <div class="form-group">
+        <label>Email</label>
+        <input type="text" class="form-control" value="" name="email"
+               placeholder="email like %..%">
+    </div>
+    <button type="submit" class="btn btn-default">查询</button>
+</form>
+<hr>
+<h2>逻辑删除</h2>
+<br>
+<form class="form-inline" action="/user/deleteUser" method="post">
+    <div class="form-group">
+        <label>idGe</label>
+        <input type="text" class="form-control" value="" name="idGe"
+               placeholder="id >= idGe">
+    </div>
+    <div class="form-group">
+        <label>idLe</label>
+        <input type="text" class="form-control"  value="" name="idLe"
+               placeholder="id <= idLe">
+    </div>
+    <div class="form-group">
+        <label>Name</label>
+        <input type="text" class="form-control"  value="" name="name"
+               placeholder="name like %..%">
+    </div>
+    <div class="form-group">
+        <label>ageGe</label>
+        <input type="text" class="form-control" value="" name="ageGe"
+               placeholder="age >= ageGe">
+    </div>
+    <div class="form-group">
+        <label>ageLe</label>
+        <input type="text" class="form-control" value="" name="ageLe"
+               placeholder="age <= ageLe">
+    </div>
+    <div class="form-group">
+        <label>Email</label>
+        <input type="text" class="form-control" value="" name="email"
+               placeholder="email like %..%">
+    </div>
+    <button type="submit" class="btn btn-default">删除</button>
+</form>
+<hr>
+<h2>根据ID更新</h2>
+<br>
+<form class="form-inline" action="/user/updateUser" method="post">
+    <div class="form-group">
+        <label>ID</label>
+        <input type="text" class="form-control" value="" name="id"
+               placeholder="需要修改的字段id">
+    </div>
+    <div class="form-group">
+        <label>Name</label>
+        <input type="text" class="form-control" value="" name="name"
+               placeholder="请输入name">
+    </div>
+    <div class="form-group">
+        <label>Age</label>
+        <input type="text" class="form-control" name="age"
+               placeholder="请输入age">
+    </div>
+    <div class="form-group">
+        <label>Email</label>
+        <input type="text" class="form-control" name="email"
+               placeholder="请输入email">
+    </div>
+    <button type="submit" class="btn btn-default">更新</button>
+</form>
+<hr>
+<h2>插入</h2>
+<br>
+<form class="form-inline" action="/user/insertUser" method="post">
+    <div class="form-group">
+        <label>Name</label>
+        <input type="text" class="form-control" value="" name="name"
+               placeholder="请输入name">
+    </div>
+    <div class="form-group">
+        <label>Age</label>
+        <input type="text" class="form-control" name="age"
+               placeholder="请输入age">
+    </div>
+    <div class="form-group">
+        <label>Email</label>
+        <input type="text" class="form-control" name="email"
+               placeholder="请输入email">
+    </div>
+    <button type="submit" class="btn btn-default">插入</button>
+</form>
+
+<hr>
+<table class="table table-bordered">
+    <caption>边框表格布局</caption>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>NAME</th>
+        <th>AGE</th>
+        <th>EMAIL</th>
+        <th>CREATE_TIME</th>
+        <th>UPDATE_TIME</th>
+        <th>VERSION</th>
+        <th>DELETED</th>
+    </tr>
+    </thead>
+    <tbody th:each="li:${uList}">
+    <tr>
+        <th th:text="${li.id}"></th>
+        <th th:text="${li.name}"></th>
+        <th th:text="${li.age}"></th>
+        <th th:text="${li.email}"></th>
+        <th th:text="${li.createTime}"></th>
+        <th th:text="${li.updateTime}"></th>
+        <th th:text="${li.version}"></th>
+        <th th:text="${li.deleted}"></th>
+    </tr>
+    </tbody>
+</table>
+
+<br>
+
+
+<br/>
+</body>
+</html>
